@@ -30,7 +30,7 @@
         {
             "modifiers": [
                 {
-                    "exclude": [".git/**", ".git"],
+                    "exclude": [".git/**", ".git", "CODEOWNERS"],
                     "rename": {
                         ".github.template/": ".github/"
                     }
