@@ -1,0 +1,82 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "Filippo Marcantionio",
+    "classifications": ["Web", "Microservice"],
+    "name": "Microservice Template",
+    "shortName": "microservice",
+    "identity": "Microservice.Template",
+    "sourceName": "MS_NAME",
+    "preferNameDirectory": true,
+    "tags": {
+        "language": "C#",
+        "type": "project"
+    },
+    "primaryOutputs": [{ "path": "MS_NAME.sln" }],
+    "symbols": {
+        "servicePort": {
+            "type": "parameter",
+            "datatype": "int",
+            "defaultValue": "5000",
+            "description": "Port the service listens on"
+        },
+        "containerRegistry": {
+            "type": "parameter",
+            "datatype": "string",
+            "defaultValue": "myregistry.internal",
+            "description": "Container registry hostname"
+        }
+    },
+    "sources": [
+        {
+            "modifiers": [
+                {
+                    "exclude": [".git/**", ".git"],
+                    "rename": {
+                        ".github.template/": ".github/"
+                    }
+                }
+            ]
+        }
+    ],
+    "postActions": [
+        {
+            "id": "set-execute-permission",
+            "condition": "(OS != \"Windows_NT\")",
+            "description": "Make scripts executable",
+            "manualInstructions": [{ "text": "Run 'chmod +x scripts/*.sh'" }],
+            "actionId": "cb9a6cf3-4f5c-4860-b9d2-03a574959774",
+            "args": {
+                "+x": "scripts/init-git.sh"
+            }
+        },
+        {
+            "id": "run-init-script",
+            "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+            "description": "Initialize a fresh local git repository for the generated project.",
+            "manualInstructions": [
+                {
+                    "text": "If the automatic init did not run, run the appropriate script in scripts/: `./scripts/init-git.sh` (unix) or `scripts\\init-git.ps1` (PowerShell)."
+                }
+            ],
+            "continueOnError": true,
+            "args": {
+                "executable": "scripts/init-git.sh",
+                "args": "",
+                "redirectStandardOutput": false,
+                "redirectStandardError": false
+            },
+            "condition": "(OS != \"Windows_NT\")"
+        },
+        {
+            "id": "run-init-script-windows",
+            "condition": "(OS == \"Windows_NT\")",
+            "description": "Initialize a fresh local git repository",
+            "manualInstructions": [{ "text": "Run 'scripts\\init-git.ps1'" }],
+            "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+            "args": {
+                "executable": "powershell.exe",
+                "args": "-File scripts/init-git.ps1"
+            }
+        }
+    ]
+}
