@@ -1,0 +1,5 @@
+services:
+  integration:
+    build:
+      context: .
+      target: integration-test

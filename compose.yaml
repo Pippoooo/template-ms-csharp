@@ -1,0 +1,23 @@
+services:
+  app:
+    build:
+      context: .
+      target: development
+    ports:
+      - 8080:8080
+    env_file:
+      - .env
+    environment:
+      - DOTNET_WATCH_RESTART_ON_RUDE_EDIT=1
+      - DOTNET_USE_POLLING_FILE_WATCHER=1
+    volumes:
+      - ./MS_NAME.sln:/source/MS_NAME.sln:cached
+      - ./src/app:/source/src/app:cached
+      - ./Directory.Build.props:/source/Directory.Build.props:cached
+      - ./Directory.Packages.props:/source/Directory.Packages.props:cached
+      - ./.editorconfig:/source/.editorconfig:cached
+    # for debugger
+    security_opt:
+      - seccomp:unconfined
+    cap_add:
+      - SYS_PTRACE
