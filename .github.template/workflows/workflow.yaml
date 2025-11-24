@@ -43,7 +43,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run unit-test target
+      - name: Run integration-test target
         run: docker compose -f compose.integration.yaml up --build --abort-on-container-exit --exit-code-from integration
 
   deploy:
