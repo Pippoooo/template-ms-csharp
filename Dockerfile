@@ -23,7 +23,7 @@ RUN dotnet test src/test/MS_NAME.Unit --configuration Release
 
 
 FROM build AS integration-test
-RUN dotnet test src/test/MS_NAME.Integration --configuration Release
+
 
 
 

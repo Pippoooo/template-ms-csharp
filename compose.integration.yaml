@@ -3,3 +3,11 @@ services:
     build:
       context: .
       target: integration-test
+    command:
+      [
+        "dotnet",
+        "test",
+        "src/test/PostService.Integration",
+        "--configuration",
+        "Release",
+      ]
